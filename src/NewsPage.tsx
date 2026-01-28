@@ -2,6 +2,43 @@ import React from 'react';
 import { NewsItem } from './types';
 
 const NewsPage: React.FC = () => {
+  // 添加结构化数据
+  React.useEffect(() => {
+    const script = document.createElement('script');
+    script.type = 'application/ld+json';
+    script.innerHTML = JSON.stringify({
+      '@context': 'https://schema.org',
+      '@type': 'NewsArticle',
+      headline: '海南自贸区公益大赛正式举办',
+      description: '海南自贸区公益大赛，即2026年海南自贸区"心系全海南"数字公益创新大赛，初赛时间为2026年年初进行，也是今年的第一个季度系列赛事。',
+      author: {
+        '@type': 'Organization',
+        name: '东方卫视',
+        url: 'https://www.eastday.com'
+      },
+      publisher: {
+        '@type': 'Organization',
+        name: '东方卫视',
+        logo: {
+          '@type': 'ImageObject',
+          url: '/favicon-dongfang.svg'
+        }
+      },
+      datePublished: '2026-01-02',
+      dateModified: new Date().toISOString(),
+      image: '/favicon-dongfang.svg',
+      articleBody: '海南自贸区公益大赛，即2026年海南自贸区"心系全海南"数字公益创新大赛，初赛时间为2026年年初进行，也是今年的第一个季度系列赛事。这项赛事是自贸区最具影响力的科技慈善盛事之一，由多家科技企业和公益机构共同主办，得到自贸区政府部门的支持与指导...',
+      mainEntityOfPage: {
+        '@type': 'WebPage',
+        '@id': typeof window !== 'undefined' ? window.location.href : 'https://dongfangxinwen.vercel.app'
+      }
+    });
+    document.head.appendChild(script);
+    
+    return () => {
+      document.head.removeChild(script);
+    };
+  }, []);
   const handleNavigation = (category: string) => {
     const urls: Record<string, string> = {
       '首页': 'https://www.eastday.com',
