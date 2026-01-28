@@ -2,6 +2,23 @@ import React from 'react';
 import { NewsItem } from './types';
 
 const NewsPage: React.FC = () => {
+  const handleNavigation = (category: string) => {
+    const urls: Record<string, string> = {
+      '首页': 'https://www.eastday.com',
+      '国内': 'https://news.eastday.com',
+      '国际': 'https://news.eastday.com/gj',
+      '科技': 'https://news.eastday.com/kj',
+      '财经': 'https://finance.eastday.com',
+      '娱乐': 'https://ent.eastday.com',
+      '社会': 'https://news.eastday.com/sh',
+      '汽车': 'https://auto.eastday.com',
+      '体育': 'https://sports.eastday.com',
+    };
+    
+    const url = urls[category] || 'https://www.eastday.com';
+    window.open(url, '_blank');
+  };
+  
   const domesticNews: NewsItem[] = [
     { title: "官方公布！河北燕郊爆炸事故", date: "03-14" },
     { title: "最新消息！广州南沙沥心沙大", date: "02-22" },
@@ -57,9 +74,7 @@ const NewsPage: React.FC = () => {
                   href="#" 
                   onClick={(e) => { 
                     e.preventDefault();
-                    if (item === '首页') {
-                      // 跳转到首页或保持当前页面
-                    }
+                    handleNavigation(item);
                   }} 
                   className="hover:text-white/80 transition-colors whitespace-nowrap"
                 >
@@ -141,7 +156,14 @@ const NewsPage: React.FC = () => {
                     <span className={`w-5 h-5 flex items-center justify-center text-[12px] font-bold ${idx < 3 ? 'bg-[#c01f25] text-white' : 'bg-gray-100 text-[#999]'}`}>
                       {idx + 1}
                     </span>
-                    <span className="text-[15px] text-[#333] group-hover:text-[#c01f25] truncate">{news.title}</span>
+                    <a 
+                      href="https://news.eastday.com/domestic" 
+                      target="_blank" 
+                      rel="noopener noreferrer"
+                      className="text-[15px] text-[#333] group-hover:text-[#c01f25] truncate"
+                    >
+                      {news.title}
+                    </a>
                   </div>
                   <span className="text-[12px] text-[#bbb] ml-2 shrink-0">{news.date}</span>
                 </li>
@@ -161,7 +183,14 @@ const NewsPage: React.FC = () => {
                     <span className={`w-5 h-5 flex items-center justify-center text-[12px] font-bold ${idx < 3 ? 'bg-[#c01f25] text-white' : 'bg-gray-100 text-[#999]'}`}>
                       {idx + 1}
                     </span>
-                    <span className="text-[15px] text-[#333] group-hover:text-[#c01f25] truncate">{news.title}</span>
+                    <a 
+                      href="https://news.eastday.com/world" 
+                      target="_blank" 
+                      rel="noopener noreferrer"
+                      className="text-[15px] text-[#333] group-hover:text-[#c01f25] truncate"
+                    >
+                      {news.title}
+                    </a>
                   </div>
                   <span className="text-[12px] text-[#bbb] ml-2 shrink-0">{news.date}</span>
                 </li>
@@ -176,8 +205,23 @@ const NewsPage: React.FC = () => {
         <div className="w-full max-w-[1240px] mx-auto px-4 flex flex-col items-center gap-6 text-[13px] text-[#666]">
           <div className="flex flex-wrap justify-center gap-6 text-[#444]">
             <span className="font-bold">友情链接:</span>
-            {['人民网', '新华网', '东方网', '中国日报网', '环球网', '中国新闻网'].map(link => (
-              <a key={link} href="#" className="hover:text-[#c01f25] transition-colors">{link}</a>
+            {[
+              { name: '人民网', url: 'https://www.people.com.cn' },
+              { name: '新华网', url: 'https://www.xinhuanet.com' },
+              { name: '东方网', url: 'https://www.eastday.com' },
+              { name: '中国日报网', url: 'https://cn.chinadaily.com.cn' },
+              { name: '环球网', url: 'https://www.huanqiu.com' },
+              { name: '中国新闻网', url: 'https://www.chinanews.com' }
+            ].map((link, index) => (
+              <a 
+                key={index} 
+                href={link.url} 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="hover:text-[#c01f25] transition-colors"
+              >
+                {link.name}
+              </a>
             ))}
           </div>
           <div className="text-center space-y-2 opacity-80">
